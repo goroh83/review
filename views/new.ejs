@@ -1,0 +1,11 @@
+<% include partials/header  %>
+<h1>Add new photograph:</h1>
+    <form action='/photos' method='POST'>
+        <label>name:</label><br>
+        <input type='text' name='name'><br>
+        <label>image:</label><br>
+        <input type='text' name='image'><br>
+        <button>Submit</button>
+    </form>
+<a href='/photos'>Go back</a>
+<% include partials/footer  %>
