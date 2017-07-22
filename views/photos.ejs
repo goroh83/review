@@ -1,13 +1,32 @@
 <% include partials/header %>
-<h1>My photographs:</h1>
-<a href='/photos/new'>add new photo</a>
 
-<% photos.forEach(function(photo) { %>
-    <div>
-        <h3><%= photo.name %></h3>
-        <img src='<%= photo.image %>'>
+<div class='container'>
+    <header class='jumbotron'>
+        <div class='container'>
+            <h1>My photographs:</h1>
+            <p>view my photographs from Asia</p>
+            <p>
+            <a href='/photos/new' class='btn btn-primary btn-lg'>add new photo</a>
+            </p>
+        </div>
+    </header>
+    
+    <div class='row' style='display: flex, flex-wrap: wrap'>
+        <div class='col-lg-12'>
+            <h2>Most popular photos:</h2>
+        </div>
+        
+        <% photos.forEach(function(photo) { %>
+        <div class='col-md-3 col-sm-6 container text-center'>
+            <div class='thumbnail'>
+                <img src='<%= photo.image %>'>
+                <div class='caption'>
+                    <h3><%= photo.name %></h3>    
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        
     </div>
-
-<% }); %>
-
+</div>
 <% include partials/footer %>

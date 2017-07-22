@@ -1,11 +1,24 @@
 <% include partials/header  %>
-<h1>Add new photograph:</h1>
-    <form action='/photos' method='POST'>
-        <label>name:</label><br>
-        <input type='text' name='name'><br>
-        <label>image:</label><br>
-        <input type='text' name='image'><br>
-        <button>Submit</button>
-    </form>
-<a href='/photos'>Go back</a>
+
+<div class='container'>
+    <div class='row'>
+    <h1 style='text-align: center;'>Add new photograph:</h1>
+        <div style='width:30%; margin: 25px auto;'>
+        <form action='/photos' method='POST'>
+            <div class='form-group text-center'>
+                <label>name:</label><br>
+                <input type='text' name='name' class='form-control'><br>
+            </div>    
+            <div class='form-group text-center'>
+                <label class='text-center'>image:</label><br>
+                <input type='text' name='image' class='form-control'><br>
+            </div>    
+            <div class='form-group'>
+                <button class='btn btn-md btn-primary btn-block'>Submit</button>
+            </div>
+        </form>
+        <a href='/photos'>Go back</a>
+        </div>
+    </div>    
+</div>
 <% include partials/footer  %>

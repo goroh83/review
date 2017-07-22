@@ -13,7 +13,7 @@ app.get('/', function(req, res){
 var photos = [
     {name: "Hangzhou", image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_2751.jpg"},
     {name: "Shanghai", image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_3899.jpg"},
-    {name: "Guangzhou", image: "http://photo.goroh.co/wp-content/uploads/2017/02/P6303523.jpg"}
+    {name: "Nepal", image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_8829.jpg"}
 ];
 
 
