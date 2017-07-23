@@ -4,4 +4,8 @@
 <img src='<%= photo.image %>'>
 <p> <%= photo.desc %></p>
 
+<% photo.comments.forEach(function(comment){ %>
+    <p><%= comment.author %> - <%= comment.text %></p>
+<% }) %>
+
 <% include partials/footer %>
