@@ -26,14 +26,14 @@ app.get('/photos', function(req, res){
         if(err) {
             console.log(err);
         } else {
-            res.render('index', {photos: allPhotos});
+            res.render('photos/index', {photos: allPhotos});
         }
     });
 });
 
 // NEW - submit new photo
 app.get('/photos/new', function(req, res){
-    res.render('new');
+    res.render('photos/new');
 });
 
 // CREATE - new photo
@@ -61,10 +61,46 @@ app.get('/photos/:id', function(req, res){
             console.log(err);
             res.redirect('/photos');
         } else {
-            res.render('show', { photo: foundPhoto});
+            res.render('photos/show', { photo: foundPhoto});
         }
     });
 });
+
+// ==============
+// COMENTS routes
+// ==============
+app.get('/photos/:id/comments/new', function(req, res){
+    // find photo by id
+    Photo.findById(req.params.id, function(err, photo){
+        if(err){
+            console.log(err);
+        } else {
+            res.render('comments/new', {photo: photo});
+        }
+    });
+});
+
+app.post('/photos/:id/comments', function(req, res){
+    //lookup photo using id
+    Photo.findById(req.params.id, function(err, photo){
+        if(err){
+            console.log(err);
+            res.redirect('/photos');
+        } else {
+            //create new comment
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    photo.comments.push(comment);
+                    photo.save();
+                    res.redirect('/photos/' + photo._id);
+                }
+            });
+        }
+    });
+});
+
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log('server started');
