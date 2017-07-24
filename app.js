@@ -61,7 +61,7 @@ app.get('/photos/:id', function(req, res){
             console.log(err);
             res.redirect('/photos');
         } else {
-            res.render('photos/show', { photo: foundPhoto});
+            res.render('photos/show', {photo: foundPhoto});
         }
     });
 });

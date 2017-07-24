@@ -6,17 +6,17 @@ var data = [
         {
             name: "Hangzhou", 
             image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_2751.jpg",
-            desc: "Beautiful sunset over West Lake in Hangzhou. Spectacular views!"
+            desc: "Beautiful sunset over West Lake in Hangzhou. Spectacular views!Praesent ultricies placerat massa, a tincidunt est rutrum vel. Mauris congue ante in laoreet aliquam. Mauris blandit ex ac nunc bibendum consequat. Curabitur ullamcorper blandit ipsum, id condimentum tortor pharetra in."
         },
         {
             name: "Shanghai", 
             image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_3899.jpg",
-            desc: "Early sunset over Pudong- financial/business district of Shanghai. Photograph taken around 4.30am"
+            desc: "Early sunset over Pudong- financial/business district of Shanghai. Photograph taken around 4.30am. Praesent ultricies placerat massa, a tincidunt est rutrum vel. Mauris congue ante in laoreet aliquam. Mauris blandit ex ac nunc bibendum consequat. Curabitur ullamcorper blandit ipsum, id condimentum tortor pharetra in."
         },
         {
             name: "Nepal", 
             image: "http://photo.goroh.co/wp-content/uploads/2017/02/DSC_8829.jpg",
-            desc: "Mustang Valley under Thorung La Pass. In the background Upper Mustang."
+            desc: "Mustang Valley under Thorung La Pass. In the background Upper Mustang. Praesent ultricies placerat massa, a tincidunt est rutrum vel. Mauris congue ante in laoreet aliquam. Mauris blandit ex ac nunc bibendum consequat. Curabitur ullamcorper blandit ipsum, id condimentum tortor pharetra in."
         }
 ];
 
