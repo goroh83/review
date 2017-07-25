@@ -1,6 +1,8 @@
 var express             = require('express'),
     app                 = express(),
     bodyParser          = require('body-parser'),
+    passport            = require('passport'),
+    LocalStrategy       = require('passport-local'),
     Photo               = require('./models/photo'),
     Comment             = require('./models/comment'),
     User                = require('./models/user'),
@@ -11,7 +13,22 @@ var express             = require('express'),
 mongoose.connect("mongodb://localhost/review", {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));    
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 seedDB();
+
+// PASSPORT CONFIG
+app.use(require('express-session')({
+    secret: 'Peter is bald',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 //LANDING page
 app.get('/', function(req, res){
@@ -67,7 +84,7 @@ app.get('/photos/:id', function(req, res){
 });
 
 // ==============
-// COMENTS routes
+// COMMENTS routes
 // ==============
 app.get('/photos/:id/comments/new', function(req, res){
     // find photo by id
@@ -101,6 +118,42 @@ app.post('/photos/:id/comments', function(req, res){
     });
 });
 
+// ==============
+// AUTH routes
+// ==============
+
+app.get('/register', function(req, res){
+   res.render('register'); 
+});
+
+app.post('/register', function(req, res){
+    var newUser = new User({username: req.body.username});
+   User.register(newUser, req.body.password, function(err, user){
+       if(err){
+           console.log(err);
+           return res.render('register');
+       }
+       passport.authenticate('local')(req, res, function(){
+           res.redirect('/photos');
+       });
+   }); 
+});
+
+// ==============
+// LOGIN route
+// ==============
+// show login form
+app.get('/login', function(req, res){
+    res.render('login');
+}); 
+
+//handling login
+app.post('/login', passport.authenticate('local', 
+    {
+        successRedirect: '/photos',
+        failureRedirect: '/login'
+    }), function(req, res){
+});
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log('server started');

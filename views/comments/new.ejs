@@ -4,7 +4,7 @@
     <div class='row'>
     <h1 style='text-align: center;'>Add new comment to <%= photo.name %>:</h1>
         <div style='width:30%; margin: 25px auto;'>
-        <form action='/photos/<%= photo._id %>/comments' method='POST'>
+        <form action='/photos/<%= photo._id %>/comments' method='post'>
             <div class='form-group text-center'>
                 <label>author:</label><br>
                 <input type='text' name='comment[author]' class='form-control'><br>
