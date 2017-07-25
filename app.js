@@ -29,6 +29,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//middleware
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
 
 //LANDING page
 app.get('/', function(req, res){
@@ -86,7 +91,7 @@ app.get('/photos/:id', function(req, res){
 // ==============
 // COMMENTS routes
 // ==============
-app.get('/photos/:id/comments/new', function(req, res){
+app.get('/photos/:id/comments/new', isLoggedIn,  function(req, res){
     // find photo by id
     Photo.findById(req.params.id, function(err, photo){
         if(err){
@@ -97,7 +102,7 @@ app.get('/photos/:id/comments/new', function(req, res){
     });
 });
 
-app.post('/photos/:id/comments', function(req, res){
+app.post('/photos/:id/comments', isLoggedIn, function(req, res){
     //lookup photo using id
     Photo.findById(req.params.id, function(err, photo){
         if(err){
@@ -139,6 +144,7 @@ app.post('/register', function(req, res){
    }); 
 });
 
+
 // ==============
 // LOGIN route
 // ==============
@@ -154,6 +160,22 @@ app.post('/login', passport.authenticate('local',
         failureRedirect: '/login'
     }), function(req, res){
 });
+
+
+//logout route
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/photos');
+});
+
+//middleware
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
+
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log('server started');

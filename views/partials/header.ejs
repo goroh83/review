@@ -13,10 +13,17 @@
             </div>
             <div class='collapse navbar-collapse'>
                 <ul class='nav navbar-nav navbar-right'>
+                    <% if(!currentUser) { %>
                     <li><a href='/photos'>Home</a></li>
-                    <li><a href='#'>Login</a></li>
-                    <li><a href='#'>Sign up</a></li>
+                    <li><a href='/login'>Login</a></li>
+                    <li><a href='/register'>Sign up</a></li>
                     <li><a href='/photos/new'>Add photo</a></li>
+                    <% } else { %>
+                    <li><a href='/photos'>Home</a></li>
+                    <li><a href='/photos/new'>Add photo</a></li>
+                    <li><a href='/logout'>Logout</a></li>
+                    <li><a>logged in as: <strong><%= currentUser.username %></strong></a></li>
+                    <% } %>
                 </ul>
             </div>
         </div>
