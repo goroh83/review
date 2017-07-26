@@ -21,7 +21,11 @@ router.post('/', isLoggedIn, function(req, res){
     var name      = req.body.name;
     var image     = req.body.image;
     var desc      = req.body.desc;
-    var newPhoto  = { name: name, image: image, desc: desc };
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    var newPhoto  = { name: name, image: image, desc: desc, author: author };
     // create new photo and save it to DB
     Photo.create(newPhoto, function(err, newPhoto){
         if(err){

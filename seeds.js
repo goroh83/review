@@ -28,29 +28,29 @@ function seedDB(){
         }
         console.log('removed photos!');
         //add some photos
-        data.forEach(function(seed){
-            Photo.create(seed, function(err, photo){
-                if(err) {
-                    console.log(err);
-                } else {
-                    console.log('added a photo');
-                    // add some comments
-                    Comment.create(
-                        {
-                            text:'Cool pic!',
-                            author: 'Homer'
-                    }, function(err, comment){
-                        if(err) {
-                            console.log(err);
-                        } else {
-                        photo.comments.push(comment);
-                        photo.save();
-                        console.log('created new comment');
-                        }
-                    });
-                }
-            });
-        });    
+        // data.forEach(function(seed){
+        //     Photo.create(seed, function(err, photo){
+        //         if(err) {
+        //             console.log(err);
+        //         } else {
+        //             console.log('added a photo');
+        //             // add some comments
+        //             Comment.create(
+        //                 {
+        //                     text:'Cool pic!',
+        //                     author: 'Homer'
+        //             }, function(err, comment){
+        //                 if(err) {
+        //                     console.log(err);
+        //                 } else {
+        //                 photo.comments.push(comment);
+        //                 photo.save();
+        //                 console.log('created new comment');
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });    
     }); 
 }
 

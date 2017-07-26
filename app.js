@@ -10,7 +10,6 @@ var express             = require('express'),
     mongoose            = require('mongoose');
     mongoose.Promise    = global.Promise;
 
-
 // requring routes
 var commentRoutes   = require('./routes/comments'),
     photoRoutes     = require('./routes/photos'),
@@ -20,7 +19,7 @@ mongoose.connect("mongodb://localhost/review", {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));    
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-seedDB();
+// seedDB();
 
 // PASSPORT CONFIG
 app.use(require('express-session')({
