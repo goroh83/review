@@ -17,10 +17,12 @@
                     <h4><a><%= photo.name %></a></h4>
                     <p><%= photo.desc %></p>
                     <p><em>Submitted by: <strong><%= photo.author.username %></strong></em></p>
+                    <% if(currentUser && photo.author.id.equals(currentUser._id)) { %>
                     <a class='btn btn-xs btn-md btn-warning' href='/photos/<%= photo._id %>/edit'>Edit post</a>
                     <form class='inline-form' action='/photos/<%= photo._id %>?_method=DELETE' method='POST'>
                         <button class='btn btn-md btn-danger btn-xs' >Delete post</button>
                     </form>
+                    <% } %>
                 </div>
             </div>
             <div class='well'>
@@ -31,10 +33,14 @@
                 <% photo.comments.forEach(function(comment){ %>
                 <div class='row'>
                     <div class='col-md-12'>
-                        <%= comment.author.username %>
+                        <p><%= comment.author.username %>:</p>
                         <span class='pull-right'>10 days ago</span>
                         <p><%= comment.text %></p>
                     </div>
+                    <a class='btn btn-xs btn-md btn-warning' href='/photos/<%= photo._id%>/comments/<%= comment._id %>/edit'>edit</a>
+                    <form class='inline-form' action='/photos/<%= photo._id %>?_method=DELETE' method='POST'>
+                        <button class='btn btn-md btn-danger btn-xs' >delete</button>
+                    </form>
                 </div>
                 <% }) %>
                 <hr>

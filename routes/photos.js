@@ -56,19 +56,15 @@ router.get('/:id', function(req, res){
 
 
 //EDIT photos route
-router.get('/:id/edit', function(req, res){
+router.get('/:id/edit', checkPhotoAuth,  function(req, res){
     Photo.findById(req.params.id, function(err, foundPhoto){
-        if(err){
-            res.redirect('/photos');
-        } else{
-            res.render('photos/edit', {photo: foundPhoto});
-        }
+        res.render('photos/edit', {photo: foundPhoto});
     });
 });
 
 
 // UPDATE photos route
-router.put('/:id', function(req, res){
+router.put('/:id',  checkPhotoAuth, function(req, res){
     Photo.findByIdAndUpdate(req.params.id, req.body.photo, function(err, updatedPhoto){
         if(err){
             res.redirect('photos');
@@ -80,7 +76,7 @@ router.put('/:id', function(req, res){
 
 
 //DELETE photo route
-router.delete('/:id', function(req, res){
+router.delete('/:id', checkPhotoAuth, function(req, res){
    Photo.findByIdAndRemove(req.params.id, function(err){
        if(err){
            res.redirect('/photos');
@@ -89,6 +85,27 @@ router.delete('/:id', function(req, res){
        }
    }); 
 });
+
+
+// isAuth middleware
+function checkPhotoAuth(req, res, next) {
+     if(req.isAuthenticated()) {
+        Photo.findById(req.params.id, function(err, foundPhoto){
+            if(err){
+                res.redirect('back');
+            } else{
+                // if user owns the photo
+                if(foundPhoto.author.id.equals(req.user._id)){
+                    next();
+                }else {
+                    res.redirect('back');
+                }
+            }
+        });
+     } else {
+         res.redirect('back');
+     }
+}
 
 //middleware
 function isLoggedIn(req, res, next){
