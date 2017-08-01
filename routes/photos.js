@@ -78,6 +78,18 @@ router.put('/:id', function(req, res){
     });
 });
 
+
+//DELETE photo route
+router.delete('/:id', function(req, res){
+   Photo.findByIdAndRemove(req.params.id, function(err){
+       if(err){
+           res.redirect('/photos');
+       } else {
+           res.redirect('/photos');
+       }
+   }); 
+});
+
 //middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

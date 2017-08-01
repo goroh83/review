@@ -17,7 +17,10 @@
                     <h4><a><%= photo.name %></a></h4>
                     <p><%= photo.desc %></p>
                     <p><em>Submitted by: <strong><%= photo.author.username %></strong></em></p>
-                    <a class='btn btn-md btn-warning' href='/photos/<%= photo._id %>/edit'>Edit post</a>
+                    <a class='btn btn-xs btn-md btn-warning' href='/photos/<%= photo._id %>/edit'>Edit post</a>
+                    <form class='inline-form' action='/photos/<%= photo._id %>?_method=DELETE' method='POST'>
+                        <button class='btn btn-md btn-danger btn-xs' >Delete post</button>
+                    </form>
                 </div>
             </div>
             <div class='well'>
