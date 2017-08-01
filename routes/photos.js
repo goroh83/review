@@ -54,6 +54,30 @@ router.get('/:id', function(req, res){
     });
 });
 
+
+//EDIT photos route
+router.get('/:id/edit', function(req, res){
+    Photo.findById(req.params.id, function(err, foundPhoto){
+        if(err){
+            res.redirect('/photos');
+        } else{
+            res.render('photos/edit', {photo: foundPhoto});
+        }
+    });
+});
+
+
+// UPDATE photos route
+router.put('/:id', function(req, res){
+    Photo.findByIdAndUpdate(req.params.id, req.body.photo, function(err, updatedPhoto){
+        if(err){
+            res.redirect('photos');
+        } else {
+                res.redirect('/photos/' + req.params.id);
+        }
+    });
+});
+
 //middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

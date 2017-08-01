@@ -15,8 +15,9 @@
                 <div class='caption-full'>
                     <h4 class='pull-right'>$10/print</h4>
                     <h4><a><%= photo.name %></a></h4>
-                    <p> <%= photo.desc %></p>
+                    <p><%= photo.desc %></p>
                     <p><em>Submitted by: <strong><%= photo.author.username %></strong></em></p>
+                    <a class='btn btn-md btn-warning' href='/photos/<%= photo._id %>/edit'>Edit post</a>
                 </div>
             </div>
             <div class='well'>
