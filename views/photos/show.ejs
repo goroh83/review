@@ -33,14 +33,16 @@
                 <% photo.comments.forEach(function(comment){ %>
                 <div class='row'>
                     <div class='col-md-12'>
-                        <p><%= comment.author.username %>:</p>
+                        <p><strong><%= comment.author.username %>:</strong></p>
                         <span class='pull-right'>10 days ago</span>
                         <p><%= comment.text %></p>
                     </div>
+                    <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
                     <a class='btn btn-xs btn-md btn-warning' href='/photos/<%= photo._id %>/comments/<%= comment._id %>/edit'>edit</a>
                     <form class='inline-form' action="/photos/<%= photo._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
                         <button class='btn btn-md btn-danger btn-xs'>delete</button>
                     </form>
+                    <% } %>
                 </div>
                 <% }) %>
                 <hr>
