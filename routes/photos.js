@@ -1,6 +1,7 @@
-var express     = require('express');
-var router      = express.Router();
-var Photo       = require('../models/photo');
+var express         = require('express');
+var router          = express.Router();
+var Photo           = require('../models/photo');
+var middleware      = require('../middleware/index.js');
 
 // INDEX - show all photos
 router.get('/', function(req, res){
@@ -14,9 +15,8 @@ router.get('/', function(req, res){
     });
 });
 
-
 // CREATE - new photo
-router.post('/', isLoggedIn, function(req, res){
+router.post('/', middleware.isLoggedIn, function(req, res){
     // get data from form
     var name      = req.body.name;
     var image     = req.body.image;
@@ -38,7 +38,7 @@ router.post('/', isLoggedIn, function(req, res){
 });
 
 // NEW - submit new photo
-router.get('/new', isLoggedIn, function(req, res){
+router.get('/new', middleware.isLoggedIn, function(req, res){
     res.render('photos/new');
 });
 
@@ -54,9 +54,8 @@ router.get('/:id', function(req, res){
     });
 });
 
-
 //EDIT photos route
-router.get('/:id/edit', checkPhotoAuth,  function(req, res){
+router.get('/:id/edit', middleware.checkPhotoAuth,  function(req, res){
     Photo.findById(req.params.id, function(err, foundPhoto){
         res.render('photos/edit', {photo: foundPhoto});
     });
@@ -64,7 +63,7 @@ router.get('/:id/edit', checkPhotoAuth,  function(req, res){
 
 
 // UPDATE photos route
-router.put('/:id',  checkPhotoAuth, function(req, res){
+router.put('/:id',  middleware.checkPhotoAuth, function(req, res){
     Photo.findByIdAndUpdate(req.params.id, req.body.photo, function(err, updatedPhoto){
         if(err){
             res.redirect('photos');
@@ -74,9 +73,8 @@ router.put('/:id',  checkPhotoAuth, function(req, res){
     });
 });
 
-
 //DELETE photo route
-router.delete('/:id', checkPhotoAuth, function(req, res){
+router.delete('/:id', middleware.checkPhotoAuth, function(req, res){
    Photo.findByIdAndRemove(req.params.id, function(err){
        if(err){
            res.redirect('/photos');
@@ -85,34 +83,5 @@ router.delete('/:id', checkPhotoAuth, function(req, res){
        }
    }); 
 });
-
-
-// isAuth middleware
-function checkPhotoAuth(req, res, next) {
-     if(req.isAuthenticated()) {
-        Photo.findById(req.params.id, function(err, foundPhoto){
-            if(err){
-                res.redirect('back');
-            } else{
-                // if user owns the photo
-                if(foundPhoto.author.id.equals(req.user._id)){
-                    next();
-                }else {
-                    res.redirect('back');
-                }
-            }
-        });
-     } else {
-         res.redirect('back');
-     }
-}
-
-//middleware
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/login');
-}
 
 module.exports = router;
