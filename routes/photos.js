@@ -66,7 +66,8 @@ router.get('/:id/edit', middleware.checkPhotoAuth,  function(req, res){
 router.put('/:id',  middleware.checkPhotoAuth, function(req, res){
     Photo.findByIdAndUpdate(req.params.id, req.body.photo, function(err, updatedPhoto){
         if(err){
-            res.redirect('photos');
+            req.flash('error', "You don't have permission to do that");
+            res.redirect('back');
         } else {
                 res.redirect('/photos/' + req.params.id);
         }

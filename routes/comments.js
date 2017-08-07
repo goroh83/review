@@ -22,12 +22,15 @@ router.post('/', middleware.isLoggedIn, function(req, res){
     Photo.findById(req.params.id, function(err, photo){
         if(err){
             console.log(err);
+            req.flash('error', "Ooops! Something went wrong");
             res.redirect('/photos');
         } else {
             //create new comment
             Comment.create(req.body.comment, function(err, comment){
                 if(err){
                     console.log(err);
+                    req.flash('error', "Ooops! Something went wrong");
+                    res.redirect('/photos' + photo._id);
                 } else {
                     // add username and id to comment
                     comment.author.id = req.user._id;
@@ -36,6 +39,7 @@ router.post('/', middleware.isLoggedIn, function(req, res){
                     comment.save();
                     photo.comments.push(comment);
                     photo.save();
+                    req.flash('success', 'Successfully added a new comment.');
                     res.redirect('/photos/' + photo._id);
                 }
             });
@@ -58,8 +62,10 @@ router.get('/:comment_id/edit', middleware.checkCommentAuth, function(req, res){
 router.put('/:comment_id', middleware.checkCommentAuth, function(req, res){
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment,  function(err, updatedComment){
         if(err) {
+            req.flash('error', "Oops! Something went wrong...");
             res.redirect('back');
         } else {
+            req.flash('success','Comment updated');
             res.redirect('/photos/' + req.params.id);
         }
     });
@@ -69,8 +75,10 @@ router.put('/:comment_id', middleware.checkCommentAuth, function(req, res){
 router.delete('/:comment_id', middleware.checkCommentAuth, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if(err) {
+            req.flash('error', "Oops! Something went wrong...");
             res.redirect('back');
         } else {
+            req.flash('success', 'Comment deleted.');
             res.redirect('/photos/' + req.params.id);
         }
     });
